@@ -23,13 +23,19 @@ export const StatDisplay = ({
   helpText,
   decorator,
 }: Props) => {
+  const statNumberMarkup = loading ? (
+    'loading...'
+  ) : (
+    <>
+      {data} {decorator}
+    </>
+  );
+
   return (
     <Box p={4} bg='gray.50' borderRadius='lg'>
       <Stat>
         <StatLabel>{label}</StatLabel>
-        <StatNumber>
-          {data} {decorator}
-        </StatNumber>
+        <StatNumber>{statNumberMarkup}</StatNumber>
         <StatHelpText>{helpText}</StatHelpText>
       </Stat>
     </Box>
