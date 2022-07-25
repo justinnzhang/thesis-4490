@@ -23,7 +23,9 @@ export const LoginPage = ({ setIsAuthenticated, setUser }: any) => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
-  function handleLogin() {
+  function handleLogin(e: any) {
+    e.preventDefault();
+
     setErrors({});
     const user = checkIfUserExists(password, email);
 
@@ -53,7 +55,7 @@ export const LoginPage = ({ setIsAuthenticated, setUser }: any) => {
         </Text>
       </Stack>
       <Stack spacing={4}>
-        <form>
+        <form onSubmit={(e) => handleLogin(e)}>
           <Stack direction='column'>
             <Input
               value={email}
@@ -69,7 +71,6 @@ export const LoginPage = ({ setIsAuthenticated, setUser }: any) => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 name='password'
-                isInvalid={errors?.password}
               />
               <InputRightElement width='4.5rem'>
                 <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -77,11 +78,14 @@ export const LoginPage = ({ setIsAuthenticated, setUser }: any) => {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            {errors.password && (
+              <Text color='red.600'>Please double check your credentials</Text>
+            )}
+            <Button colorScheme='green' w='100%' type='submit'>
+              Login
+            </Button>
           </Stack>
         </form>
-        <Button onClick={handleLogin} colorScheme='green' w='100%'>
-          Login
-        </Button>
       </Stack>
     </Container>
   );

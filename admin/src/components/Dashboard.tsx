@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
+import {
+  Container,
+  Heading,
+  IconButton,
+  SimpleGrid,
+  Stack,
+  Spinner,
+} from '@chakra-ui/react';
 
 import {
   getPercentageOfAcceptUsers,
@@ -11,6 +18,8 @@ import {
 } from '../functions';
 import { StatDisplay } from './StatDisplay';
 import { AllSessionsTable } from './AllSessionsTable';
+
+import { FiRefreshCw } from 'react-icons/fi';
 
 interface Props {
   user?: User;
@@ -34,7 +43,8 @@ export const Dashboard = ({ user }: Props) => {
     setAllSessionLoading(true);
     let { data: SessionData, error } = await supabase
       .from('Sessions')
-      .select('*');
+      .select('*')
+      .order('id', { ascending: false });
 
     if (error) {
       setErrors({ ...errors, allSessionData: error.message });
@@ -46,7 +56,14 @@ export const Dashboard = ({ user }: Props) => {
 
   return (
     <Container maxW='container.md' pt={8}>
-      <Heading mb={8}>Welcome {user?.first_name}</Heading>
+      <Heading mb={4}>Welcome {user?.first_name}</Heading>
+      <IconButton
+        isLoading={allSessionLoading}
+        icon={<FiRefreshCw />}
+        aria-label='reload'
+        onClick={getAllSessionData}
+        mb={2}
+      />
       <SimpleGrid columns={[1, 2, 2, 3]} spacing={4}>
         <StatDisplay
           loading={allSessionLoading}

@@ -2,15 +2,14 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Text,
   Box,
   Badge,
+  Spinner,
 } from '@chakra-ui/react';
 import { SupabaseClient } from '@supabase/supabase-js';
 
@@ -25,7 +24,12 @@ interface Props {
 
 export const AllSessionsTable = ({ loading, data, supabase }: Props) => {
   if (loading) {
-    return <p>Loading</p>;
+    return (
+      <Box pt={8} pb={8}>
+        <Text>Loading...</Text>
+        <Spinner />
+      </Box>
+    );
   }
 
   return (
