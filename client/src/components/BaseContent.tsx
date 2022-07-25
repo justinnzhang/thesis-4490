@@ -32,8 +32,6 @@ export const BaseContent = ({ isComplete, sessionId }: Props) => {
     );
   }
 
-  console.log('sessionId', sessionId);
-
   const supabaseUrl = 'https://oqumrrcnkhqbzsnbrsri.supabase.co';
   const supabaseKey = process.env.REACT_APP_SUPABASE_KEY || 'supabase-key';
   const supabase = createClient(supabaseUrl, supabaseKey);
@@ -106,7 +104,9 @@ export const BaseContent = ({ isComplete, sessionId }: Props) => {
         onChange={(e) => setFeedback(e.target.value)}
         placeholder='Please leave your thoughts here'
       />
-      <Button onClick={handleSubmit}>Submit your thoughts</Button>
+      <Button onClick={handleSubmit} isLoading={isLoading}>
+        Submit your thoughts
+      </Button>
       <Text color='gray.600'>Thank you for taking the time! 💜</Text>
     </Stack>
   );
