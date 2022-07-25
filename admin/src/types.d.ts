@@ -13,4 +13,5 @@ interface Session {
   options_payload: any;
   updated_clicked: boolean;
   continue_clicked: boolean;
+  notes: string;
 }

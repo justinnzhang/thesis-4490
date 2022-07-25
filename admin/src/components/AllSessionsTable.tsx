@@ -12,16 +12,18 @@ import {
   Box,
   Badge,
 } from '@chakra-ui/react';
+import { SupabaseClient } from '@supabase/supabase-js';
 
-import { getMasterSwitchSetting } from '../functions';
 import { ActionBadge } from './ActionBadge';
+import { NotesDrawer } from './NotesDrawer';
 
 interface Props {
   loading: boolean;
   data: Session[];
+  supabase: SupabaseClient;
 }
 
-export const AllSessionsTable = ({ loading, data }: Props) => {
+export const AllSessionsTable = ({ loading, data, supabase }: Props) => {
   if (loading) {
     return <p>Loading</p>;
   }
@@ -39,10 +41,11 @@ export const AllSessionsTable = ({ loading, data }: Props) => {
               <Th>Session Date</Th>
               <Th>Action</Th>
               <Th>Master Enabled?</Th>
+              <Th>Notes</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {data?.map((session, index: any) => (
+            {data?.map((session: Session, index: number) => (
               <Tr key={index}>
                 <Td>{session.id}</Td>
                 <Td>
@@ -53,6 +56,9 @@ export const AllSessionsTable = ({ loading, data }: Props) => {
                 </Td>
                 <Td>
                   <MasterSwitchBadge session={session} />
+                </Td>
+                <Td>
+                  <NotesDrawer session={session} supabase={supabase} />
                 </Td>
               </Tr>
             ))}
@@ -66,7 +72,8 @@ export const AllSessionsTable = ({ loading, data }: Props) => {
 const MasterSwitchBadge = (session: any) => {
   if (!session.session.options_payload) return <p>loading...</p>;
 
-  if (!session.session.options_payload.length) return <p>N/A</p>;
+  if (!session.session.options_payload.length)
+    return <Badge colorScheme='green'>Yes</Badge>;
 
   const master_switch = session.session.options_payload?.find(
     (el: any) => el.name === 'Web Advertising Setting'

@@ -92,7 +92,11 @@ export const Dashboard = ({ user }: Props) => {
           helpText='Users that disabled private mode'
         />
       </SimpleGrid>
-      <AllSessionsTable loading={allSessionLoading} data={allSessionData} />
+      <AllSessionsTable
+        loading={allSessionLoading}
+        data={allSessionData}
+        supabase={supabase}
+      />
     </Container>
   );
 };
