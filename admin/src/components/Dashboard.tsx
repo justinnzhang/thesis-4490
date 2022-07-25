@@ -1,14 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-import {
-  Container,
-  Button,
-  Box,
-  Heading,
-  Text,
-  SimpleGrid,
-} from '@chakra-ui/react';
+import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 
 import {
   getPercentageOfAcceptUsers,
@@ -47,7 +40,6 @@ export const Dashboard = ({ user }: Props) => {
       setErrors({ ...errors, allSessionData: error.message });
     } else {
       setAllSessionData(SessionData);
-      console.log(SessionData);
     }
     setAllSessionLoading(false);
   }

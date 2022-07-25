@@ -5,13 +5,9 @@ export const createNewSession = async (session_data: Session) => {
   const supabaseKey = process.env.REACT_APP_SUPABASE_KEY || 'supabase-key';
   const supabase = createClient(supabaseUrl, supabaseKey);
 
-  console.log(session_data);
-
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('Sessions')
     .insert([{ ...session_data }]);
-
-  console.log('done', data, error);
 
   return data;
 };

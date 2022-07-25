@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ChakraProvider, Box, Container, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider, Container, extendTheme } from '@chakra-ui/react';
 
 import { BottomConsentPopup, BaseContent } from './components';
 

@@ -11,6 +11,7 @@ import {
   Text,
   Button,
   Stack,
+  Container,
 } from '@chakra-ui/react';
 
 import { CookieConsentPage } from './CookieConsentPage';
@@ -79,34 +80,38 @@ export const BottomConsentPopup = ({ setIsComplete, setSessionId }: Props) => {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader borderBottomWidth='1px'>
-            Accept all cookie settings?
-          </DrawerHeader>
-          <DrawerBody>
-            <Text>
-              These are essential in ensuring that you're able to use this site
-              properly
-            </Text>
-          </DrawerBody>
-          <DrawerFooter>
-            <Stack direction='row' spacing={8}>
-              <Button
-                variant='link'
-                onClick={() => setConsentPageOpen(true)}
-                isDisabled={isLoading}
-              >
-                Manage settings
-              </Button>
-              <Button
-                variant='solid'
-                colorScheme='green'
-                onClick={() => handleFirstAccept(sessionData)}
-                isLoading={isLoading}
-              >
-                Accept
-              </Button>
-            </Stack>
-          </DrawerFooter>
+          <Container maxW='container.sm'>
+            <DrawerHeader borderBottomWidth='1px'>
+              Accept all cookie settings?
+            </DrawerHeader>
+            <DrawerBody>
+              <Text>
+                These are essential in ensuring that you're able to use this
+                site properly
+              </Text>
+            </DrawerBody>
+          </Container>
+          <Container maxW='container.sm'>
+            <DrawerFooter>
+              <Stack direction='row' spacing={8}>
+                <Button
+                  variant='link'
+                  onClick={() => setConsentPageOpen(true)}
+                  isDisabled={isLoading}
+                >
+                  Manage settings
+                </Button>
+                <Button
+                  variant='solid'
+                  colorScheme='green'
+                  onClick={() => handleFirstAccept(sessionData)}
+                  isLoading={isLoading}
+                >
+                  Accept
+                </Button>
+              </Stack>
+            </DrawerFooter>
+          </Container>
         </DrawerContent>
       </Drawer>
     </>

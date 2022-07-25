@@ -18,6 +18,7 @@ import {
   AlertIcon,
   AlertDescription,
   Link,
+  Container,
 } from '@chakra-ui/react';
 
 import { FcHighPriority } from 'react-icons/fc';
@@ -111,7 +112,7 @@ interface Props {
 }
 
 export const CookieConsentPage = ({ sessionData, handleAccept }: Props) => {
-  const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const [options, setOptions] = useState(COOKIE_OPTIONS);
   const [canUpdate, setCanUpdate] = useState(false);
@@ -166,103 +167,107 @@ export const CookieConsentPage = ({ sessionData, handleAccept }: Props) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader bg={'gray.100'}>
-            Manage your cookie settings
+            <Container maxW='container.sm'>
+              Manage your cookie settings
+            </Container>
           </DrawerHeader>
           <DrawerBody>
-            <Stack spacing={6} mt={4}>
-              <Alert status='warning'>
-                <AlertIcon />
-                Before updating, please ensure you read and understand what each
-                type of cookie and setting does.
-              </Alert>
-              {options.map(
-                ({ name, description, state, isRequired, link }, index) => (
-                  <Flex key={`cookie-options-${index}`} alignContent='top'>
-                    <Stack spacing={1}>
-                      <Stack direction='row' alignItems='center'>
-                        <Text fontSize='lg' noOfLines={1}>
-                          {name}
-                        </Text>
-                        {!state && <FcHighPriority />}
-                      </Stack>
-                      <Stack direction='column'>
-                        <Text fontSize='md' color='gray.500'>
-                          {description}
-                        </Text>
-                        {link && (
-                          <Stack direction='row' alignItems='center'>
-                            <Link
-                              href={link}
-                              isExternal
-                              onClick={() => {
-                                const newOptions = [...options];
-                                newOptions[index].clicks += 1;
-                                newOptions[index].touched = true;
-                                setOptions(newOptions);
-                              }}
-                            >
-                              Learn more
-                            </Link>
-                            <FiExternalLink />
-                          </Stack>
-                        )}
-                      </Stack>
-                    </Stack>
-                    <Spacer />
-                    <Box>
-                      <Switch
-                        isChecked={state}
-                        onChange={() => {
-                          const newOptions = [...options];
-                          newOptions[index].state = !newOptions[index].state;
-                          newOptions[index].touched = true;
-                          setOptions(newOptions);
-                          setCanUpdate(checkForAllTouched());
-                          setExistsDisabled(checkForDisabledCookies());
-                        }}
-                        isDisabled={isRequired}
-                        colorScheme='green'
-                      />
-                    </Box>
-                  </Flex>
-                )
-              )}
-            </Stack>
-            <Box mt={4} mb={4}>
-              <SlideFade in={existsDisabled} offsetY='20px'>
-                <Alert status='error'>
+            <Container maxW='container.sm'>
+              <Stack spacing={6} mt={4}>
+                <Alert status='warning'>
                   <AlertIcon />
-                  <AlertDescription>
-                    Disabling these settings can cause issues with the way the
-                    application operates. For the best experience, please enable
-                    all cookies.
-                  </AlertDescription>
+                  Before updating, please ensure you read and understand what
+                  each type of cookie and setting does.
                 </Alert>
-              </SlideFade>
-            </Box>
-            <Text fontSize='sm' color='gray.400' mb={4}>
-              To update your preferences, you will need to either learn more
-              about every setting or enable all cookies.
-            </Text>
-            <Flex pb={4}>
-              <Spacer />
-              <Stack direction='row' spacing={8}>
-                <Button
-                  variant='link'
-                  isDisabled={!canUpdate}
-                  onClick={handleUpdate}
-                >
-                  Update
-                </Button>
-                <Button
-                  variant='solid'
-                  colorScheme='green'
-                  onClick={handleContinue}
-                >
-                  Continue
-                </Button>
+                {options.map(
+                  ({ name, description, state, isRequired, link }, index) => (
+                    <Flex key={`cookie-options-${index}`} alignContent='top'>
+                      <Stack spacing={1}>
+                        <Stack direction='row' alignItems='center'>
+                          <Text fontSize='lg' noOfLines={1}>
+                            {name}
+                          </Text>
+                          {!state && <FcHighPriority />}
+                        </Stack>
+                        <Stack direction='column'>
+                          <Text fontSize='md' color='gray.500'>
+                            {description}
+                          </Text>
+                          {link && (
+                            <Stack direction='row' alignItems='center'>
+                              <Link
+                                href={link}
+                                isExternal
+                                onClick={() => {
+                                  const newOptions = [...options];
+                                  newOptions[index].clicks += 1;
+                                  newOptions[index].touched = true;
+                                  setOptions(newOptions);
+                                }}
+                              >
+                                Learn more
+                              </Link>
+                              <FiExternalLink />
+                            </Stack>
+                          )}
+                        </Stack>
+                      </Stack>
+                      <Spacer />
+                      <Box>
+                        <Switch
+                          isChecked={state}
+                          onChange={() => {
+                            const newOptions = [...options];
+                            newOptions[index].state = !newOptions[index].state;
+                            newOptions[index].touched = true;
+                            setOptions(newOptions);
+                            setCanUpdate(checkForAllTouched());
+                            setExistsDisabled(checkForDisabledCookies());
+                          }}
+                          isDisabled={isRequired}
+                          colorScheme='green'
+                        />
+                      </Box>
+                    </Flex>
+                  )
+                )}
               </Stack>
-            </Flex>
+              <Box mt={4} mb={4}>
+                <SlideFade in={existsDisabled} offsetY='20px'>
+                  <Alert status='error'>
+                    <AlertIcon />
+                    <AlertDescription>
+                      Disabling these settings can cause issues with the way the
+                      application operates. For the best experience, please
+                      enable all cookies.
+                    </AlertDescription>
+                  </Alert>
+                </SlideFade>
+              </Box>
+              <Text fontSize='sm' color='gray.400' mb={4}>
+                To update your preferences, you will need to either learn more
+                about every setting or enable all cookies.
+              </Text>
+              <Flex pb={4}>
+                <Spacer />
+                <Stack direction='row' spacing={8}>
+                  <Button
+                    variant='link'
+                    isDisabled={!canUpdate}
+                    onClick={handleUpdate}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    variant='solid'
+                    colorScheme='green'
+                    onClick={handleContinue}
+                  >
+                    Continue
+                  </Button>
+                </Stack>
+              </Flex>
+            </Container>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
