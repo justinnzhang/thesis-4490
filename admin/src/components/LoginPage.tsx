@@ -7,6 +7,9 @@ import {
   Button,
   Container,
   Stack,
+  Heading,
+  Text,
+  Image,
 } from '@chakra-ui/react';
 
 import { checkIfUserExists } from '../functions';
@@ -34,6 +37,21 @@ export const LoginPage = ({ setIsAuthenticated, setUser }: any) => {
 
   return (
     <Container maxW='container.sm' p={8}>
+      <Stack spacing={2} mb={4}>
+        <Image
+          src='https://images.unsplash.com/photo-1658604663578-04634f4cb897?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80'
+          alt='logo'
+          w='100%'
+          h='10rem'
+          borderRadius='lg'
+          mb={2}
+          fit='cover'
+        />
+        <Heading fontSize='xl'>CS4490Z Thesis Admin Dashboard</Heading>
+        <Text color='gray.500'>
+          If you're having trouble logging in, please contact Justin Zhang
+        </Text>
+      </Stack>
       <Stack spacing={4}>
         <form>
           <Stack direction='column'>
@@ -47,7 +65,7 @@ export const LoginPage = ({ setIsAuthenticated, setUser }: any) => {
               <Input
                 pr='4.5rem'
                 type={show ? 'text' : 'password'}
-                placeholder='Enter password'
+                placeholder='Password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 name='password'

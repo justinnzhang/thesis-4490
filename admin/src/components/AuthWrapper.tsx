@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LoginPage } from './LoginPage';
 
 export const AuthWrapper = ({ setUser, children }: any) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   if (!isAuthenticated) {
     return (
