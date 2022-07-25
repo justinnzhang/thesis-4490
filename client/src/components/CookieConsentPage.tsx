@@ -110,11 +110,7 @@ interface Props {
   handleAccept: any;
 }
 
-export const CookieConsentPage = ({
-  sessionData,
-  setSessionData,
-  handleAccept,
-}: Props) => {
+export const CookieConsentPage = ({ sessionData, handleAccept }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const [options, setOptions] = useState(COOKIE_OPTIONS);

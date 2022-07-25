@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import {
   Drawer,
@@ -7,7 +7,6 @@ import {
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
-  DrawerCloseButton,
   useDisclosure,
   Text,
   Button,
@@ -24,26 +23,40 @@ const SESSION_DATA_DEFAULTS = {
   continue_clicked: false,
 };
 
-export const BottomConsentPopup = () => {
+interface Props {
+  setIsComplete: any;
+  setSessionId: any;
+}
+
+export const BottomConsentPopup = ({ setIsComplete, setSessionId }: Props) => {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const [consentPageOpen, setConsentPageOpen] = useState(false);
   const [sessionData, setSessionData] = useState(SESSION_DATA_DEFAULTS);
+  const [isLoading, setIsLoading] = useState(false);
 
-  function handleAccept(session_data: Session) {
-    createNewSession(session_data);
+  async function handleAccept(session_data: Session) {
+    setIsLoading(true);
+    const res = await createNewSession(session_data);
+    setSessionId(res?.[0].id);
 
     const timer = setTimeout(() => {
       onClose();
+      setIsComplete(true);
+      setIsLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
   }
 
-  function handleFirstAccept(session_data: Session) {
-    createNewSession({ ...session_data, first_accept: true });
+  async function handleFirstAccept(session_data: Session) {
+    setIsLoading(true);
+    const res = await createNewSession({ ...session_data, first_accept: true });
+    setSessionId(res?.[0].id);
 
     const timer = setTimeout(() => {
       onClose();
+      setIsComplete(true);
+      setIsLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
   }
@@ -77,13 +90,18 @@ export const BottomConsentPopup = () => {
           </DrawerBody>
           <DrawerFooter>
             <Stack direction='row' spacing={8}>
-              <Button variant='link' onClick={() => setConsentPageOpen(true)}>
+              <Button
+                variant='link'
+                onClick={() => setConsentPageOpen(true)}
+                isDisabled={isLoading}
+              >
                 Manage settings
               </Button>
               <Button
                 variant='solid'
                 colorScheme='green'
                 onClick={() => handleFirstAccept(sessionData)}
+                isLoading={isLoading}
               >
                 Accept
               </Button>

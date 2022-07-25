@@ -13,5 +13,5 @@ export const createNewSession = async (session_data: Session) => {
 
   console.log('done', data, error);
 
-  return '';
+  return data;
 };
