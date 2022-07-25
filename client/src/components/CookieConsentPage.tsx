@@ -248,7 +248,7 @@ export const CookieConsentPage = ({ sessionData, handleAccept }: Props) => {
                 To update your preferences, you will need to either learn more
                 about every setting or enable all cookies.
               </Text>
-              <Flex pb={4}>
+              <Flex pb={12}>
                 <Spacer />
                 <Stack direction='row' spacing={8}>
                   <Button
