@@ -77,6 +77,7 @@ export const NotesDrawer = ({ session, supabase }: Props) => {
               placeholder='Type here...'
               value={notesText}
               onChange={(e) => setNotesText(e.target.value)}
+              minH='50rem'
             />
           </DrawerBody>
 

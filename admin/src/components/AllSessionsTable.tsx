@@ -46,6 +46,7 @@ export const AllSessionsTable = ({ loading, data, supabase }: Props) => {
               <Th>Action</Th>
               <Th>Master Enabled?</Th>
               <Th>Notes</Th>
+              <Th>Edit</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -60,6 +61,11 @@ export const AllSessionsTable = ({ loading, data, supabase }: Props) => {
                 </Td>
                 <Td>
                   <MasterSwitchBadge session={session} />
+                </Td>
+                <Td maxW='10rem'>
+                  {session.notes !== 'Add your notes here' && (
+                    <Text noOfLines={1}>{session.notes}</Text>
+                  )}
                 </Td>
                 <Td>
                   <NotesDrawer session={session} supabase={supabase} />
