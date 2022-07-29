@@ -5,4 +5,5 @@ export {
   getPercentageOfUpdatedClicked,
   getMasterSwitchSetting,
   getPercentageOfMasterSwitchDisabled,
+  getUpdatedUsersAndMasterSwitchOff,
 } from './data';

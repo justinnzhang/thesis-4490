@@ -15,6 +15,7 @@ import {
   getPercentageOfContinueUsers,
   getPercentageOfUpdatedClicked,
   getPercentageOfMasterSwitchDisabled,
+  getUpdatedUsersAndMasterSwitchOff,
 } from '../functions';
 import { StatDisplay } from './StatDisplay';
 import { AllSessionsTable } from './AllSessionsTable';
@@ -95,10 +96,10 @@ export const Dashboard = ({ user }: Props) => {
         />
         <StatDisplay
           loading={allSessionLoading}
-          label='% Master Switch Disabled'
-          data={getPercentageOfMasterSwitchDisabled(allSessionData)}
+          label='% Turned Privacy Off'
+          data={getUpdatedUsersAndMasterSwitchOff(allSessionData)}
           decorator='%'
-          helpText='Users that disabled private mode'
+          helpText='Users that updated their preferences and disabled private mode'
         />
       </SimpleGrid>
       <AllSessionsTable

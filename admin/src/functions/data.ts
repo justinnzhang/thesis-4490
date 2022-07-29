@@ -36,6 +36,18 @@ export function getPercentageOfMasterSwitchDisabled(sessions: Session[]) {
   );
 }
 
+export function getUpdatedUsersAndMasterSwitchOff(sessions: Session[]) {
+  if (percentageCalculationsGuardClause(sessions)) return 'loading...';
+
+  const updatedUsers = sessions.filter(
+    (session) =>
+      session.updated_clicked === true &&
+      getMasterSwitchSetting(session.options_payload) === false
+  );
+
+  return ((updatedUsers.length / sessions.length) * 100).toFixed(2);
+}
+
 function percentageCalculationsGuardClause(sessions: Session[]) {
   if (!sessions) return true;
   if (sessions.length === 0) return true;
